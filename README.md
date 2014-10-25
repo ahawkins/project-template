@@ -1,3 +1,14 @@
+NOTE: This is a template! Download & get started like so:
+
+```
+$ mkdir new-project
+$ curl -L https://github.com/saltside/platform-docker-project-template/tarball/master > template.tar.gz
+$ tar zxf template.tar.gz --strip-components=1 && rm template.tar.gz
+```
+
+Then edit this file (`README.md`) to remove this notice and update
+accordingly.
+
 # Docker & Vagrant Based Project Template
 
 [Docker]: http://docker.io

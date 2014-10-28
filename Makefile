@@ -9,7 +9,7 @@ sha1=$(shell echo $(1) | sha1sum | cut -d ' ' -f 1)
 # targets will be created for each. A global pull, import, and export
 # task will be created to operate on the list.
 # NOTE: relevant changes should be synced to fig.yml
-DOCKER_IMAGES:=ruby:2.1.3 redis:latest 
+DOCKER_IMAGES:=ruby:2.1.3 redis:latest
 
 # Template defining tasks to pull, export, and import an image. This
 # These tasks use work arounds to ensure tasks around the dependent
@@ -71,8 +71,11 @@ TAG=$(shell echo $$CIRCLE_SHA1 | cut -c 1-7)
 # Define linked containers (these name should match keys in
 # fig.ml). The test & test-ci targets wil be run with all links set
 # correctly.
+# If you REPO_NAME contains underscores we have to remove it,
+# because fig removes it anyway and otherwise DOCKER_RUN command
+# will throw an error.
 LINKS=redis
-DOCKER_RUN:=docker run -it $(foreach link,$(LINKS),--link $(REPO_NAME)_$(link)_1:$(link))
+DOCKER_RUN:=docker run -it $(foreach link,$(LINKS),--link $(subst _,, $(REPO_NAME))_$(link)_1:$(link))
 
 # Wildcard rule to build an image from a file inside dockerfiles/
 # Use the tasks like any other dependency. Order may be controller
